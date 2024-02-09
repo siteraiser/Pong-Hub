@@ -1,0 +1,2 @@
+<h1>Store Info</h1>
+<p>This is a Dero pong store where people can privately run their own web store from home. Sellers run a pong server that does product management and payment processing at their location in a decentralized manner. The pruducts are sent to this website and private by default. Integrated addresses are used to pay through the wallet and encrypted blockchain. Shipping information needs to be attached to the order number in a separate message to the seller.</p>
