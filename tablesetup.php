@@ -37,6 +37,7 @@ CREATE TABLE users (
 	wallet varchar(128) NULL,
 	uuid varchar(128) NULL,
 	status tinyint(1) NULL,
+	checkin timestamp NULL,
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (userid)
 ) ENGINE=InnoDB;
