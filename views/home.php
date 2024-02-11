@@ -49,7 +49,7 @@ foreach($value as $product){
 		$ia_out .='<div class="iaddress">';
 		$ia_out .='<h3>'.strip($ia['comment']).'</h3>';
 		$ia_out .='<div>Price:'. ($ia['ask_amount'] * .00001) .' DERO</div>';
-		$ia_out .='<div><a href="/order/'.$ia['iaddr_id'].'">Click Here to Order</a></div>';
+		$ia_out .='<div><a href="/order/'.$ia['id'].'">Click Here to Order</a></div>';
 		if($use_ia_inventory){
 			$ia_out .='<div>Inventory:'.$ia['ia_inventory'].'</div>';
 		}
