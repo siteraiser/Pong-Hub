@@ -13,7 +13,7 @@ echo '<h4>Sold By: '. $iaddress['username'].'</h4>';
 <p>
 Copy and paste the integrated address into the send address to purchase the item described.
 </p>
-<textarea disabled id="iaddress"><?php echo $iaddress['iaddr'];?></textarea><br>
+<div id="iaddress"><?php echo $iaddress['iaddr'];?></div><br>
 <button id="copy_iaddress">Click to Copy Integrated Address</button>
 
 <p>
@@ -74,7 +74,7 @@ Order Number: <input id="uuid" type="text" placeholder="Enter Order ID Here (7b5
 
 	<div id="copy_section" class="hidden" disabled >
 		Send the string below as the message to submit your address to the seller (important! Send amount must be greater than 0 Dero! .00001 minimum).<br>
-		<textarea disabled id="senddata"></textarea><br>
+		<div id="senddata"></div><br>
 		<button id="copy_data" disabled >Click to Copy Message</button>
 	</div>
 
@@ -88,16 +88,33 @@ Order Number: <input id="uuid" type="text" placeholder="Enter Order ID Here (7b5
 var payment = document.getElementById("payment");
 var iaddress = document.getElementById("iaddress");
 var copy_iaddress_button = document.getElementById('copy_iaddress');
-copy_iaddress_button.addEventListener('click', copyIAddress, false);
+copy_iaddress_button.addEventListener('click',() => { copy('iaddress'); }, false);
 
+var selection = window.getSelection();
+function copy(el) {
 
+    const doc = document;
+    const text = doc.getElementById( el);
+    selection = window.getSelection();
+
+    range = doc.createRange();
+    range.selectNodeContents( text );
+
+    selection.removeAllRanges();
+    selection.addRange( range );
+
+	range.setStart(text, 0);
+	document.execCommand('copy')
+	//window.getSelection().removeAllRanges();
+}
+/*
 function copyIAddress() {
 	
 	iaddress.select();
 	iaddress.setSelectionRange(0, 99999); 
 	navigator.clipboard.writeText(iaddress.value);
 }
-
+*/
 
 var uuid = document.getElementById('uuid');
 var id = document.getElementById('id');
@@ -171,7 +188,7 @@ var address_instruction_1 = document.getElementById('address_instruction_1');
 var warnings = [];
 var copy_data = false;
 
-copy_data_button.addEventListener('click', copyData, false);
+copy_data_button.addEventListener('click', () => { copy('senddata');}, false);
 
 inputs.forEach((input) => {
 input.addEventListener('input', validate, false);
@@ -260,7 +277,7 @@ function validate(event){
 }
 
 
-
+/*
 function copyData() {
 	if(copy_data){
 	  // Get the text field
@@ -278,5 +295,5 @@ function copyData() {
 	}
 }
 
-
+*/
 </script>
