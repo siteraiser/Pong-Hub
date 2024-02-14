@@ -59,7 +59,7 @@ class papi extends requestHandler{
 			
 		}else{
 			/* Not Authenticated */
-			$respnse = (object)['success'=>false,'error'=>'Failed Authenitcation'];
+			$respnse = (object)['success'=>false,'error'=>'Failed Authentication'];
 			header('Content-type: application/json');
 			echo json_encode($respnse);	
 			die();
