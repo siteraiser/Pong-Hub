@@ -65,20 +65,27 @@ class userModel extends requestHandler{
 		$UUID = new UUID;
 		$uuid = $UUID->v4();
 		
+		$given = new DateTime();
+		$given->setTimezone(new DateTimeZone("UTC"));
+		$checkin = $given->format("Y-m-d H:i:s");
+		
+		
 		$query='INSERT INTO users (
 			username,
 			wallet,
 			uuid,
-			status
+			status,
+			checkin
 			)
 			VALUES
-			(?,?,?,?)';	
+			(?,?,?,?,?)';	
 		
 		$array=[
 			$registration['username'],
 			$registration['wallet'],
 			$uuid,
-			1
+			1,
+			$checkin
 			];				
 				
 		$stmt=$this->pdo->prepare($query);
@@ -90,5 +97,16 @@ class userModel extends requestHandler{
 		return $this->getUserById($this->pdo->lastInsertId('userid'));
 	}	
 	
-
+	function checkIn($uuid){
+		$given = new DateTime();
+		$given->setTimezone(new DateTimeZone("UTC"));
+		$checkin = $given->format("Y-m-d H:i:s");
+		
+		$query="UPDATE users SET 
+			checkin=:checkin
+			WHERE uuid=:uuid";
+		
+			$stmt=$this->pdo->prepare($query);
+			$stmt->execute([':checkin'=>$checkin,':uuid'=>$uuid]);			
+	}
 }	
