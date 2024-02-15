@@ -8,9 +8,14 @@ class productModel extends requestHandler{
 	}
 	//display
 	function getProductsList(){
+		$given = new DateTime();
+		$given->setTimezone(new DateTimeZone("UTC"));
+		$given->modify('-30 minutes');
+		$thrityminsago = $given->format("Y-m-d H:i:s");
+		
 		$stmt=$this->pdo->prepare("SELECT * FROM products 
-		INNER JOIN users ON products.user = users.userid");
-		$stmt->execute(array());
+		INNER JOIN users ON products.user = users.userid WHERE users.checkin > ? ORDER BY products.id DESC");//ORDER BY users.checkin DESC
+		$stmt->execute(array($thrityminsago));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $rows;
 	}
@@ -33,7 +38,7 @@ class productModel extends requestHandler{
 		SELECT * FROM i_addresses 
 		INNER JOIN products ON i_addresses.product_id = products.pid
 		INNER JOIN users ON i_addresses.user = users.userid
-		WHERE i_addresses.iaddr_id = ? AND i_addresses.user = products.user
+		WHERE i_addresses.id = ? AND i_addresses.user = products.user
 		");
 		$stmt->execute(array($ia_id));
 		$rows = $stmt->fetch(PDO::FETCH_ASSOC);
