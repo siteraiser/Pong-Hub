@@ -42,6 +42,12 @@ class papi extends requestHandler{
 				if($result !== null){
 					$respnse = (object)['success'=>true];
 				}
+			}else if($json['method'] == 'checkIn'){		
+				$txt = "check in called";
+				$myfile = file_put_contents('logs.txt', $txt.PHP_EOL , FILE_APPEND | LOCK_EX);
+				$this->userModel->checkIn($_SERVER['PHP_AUTH_PW']);				
+				$respnse = (object)['success'=>true];
+
 			}else if($json['method'] == 'register'){				
 				if($user === false){
 					$result = $this->userModel->insertUser($json['params']);			
