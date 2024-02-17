@@ -3,7 +3,7 @@ CREATE TABLE products (
 	pid smallint(6) unsigned NULL,
 	user smallint(6) unsigned NULL,
 	label varchar(1500) NULL,
-	image blob NULL,
+	image varchar(500) NULL,
 	inventory int(25),
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id)
@@ -41,3 +41,4 @@ CREATE TABLE users (
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (userid)
 ) ENGINE=InnoDB;
+
