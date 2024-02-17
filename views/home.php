@@ -18,7 +18,7 @@ function strip($html){
 }
 
 $product_out = '';
-$products_out = '';
+$products_outs = '';
 foreach($value as $product){ 
 	$product_out = '';
 	$use_ia_inventory = false;
@@ -43,7 +43,7 @@ foreach($value as $product){
 	$product_out .='</div>';
 	
 
-	
+	$product_out .='<br style="clear:both">';
 	
 	
 	
