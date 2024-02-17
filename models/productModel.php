@@ -3,6 +3,7 @@
 class productModel extends requestHandler{  
 
 	public $user;
+	public $img_loc = 'images';
 	function setUser($user){
 		$this->user = $user;
 	}
@@ -80,6 +81,20 @@ class productModel extends requestHandler{
 
 	function insertProduct($product){
 		
+
+		$imageuri ='';
+		if(isset($product['image'])){	
+					
+		
+			if($product['image']!=''){
+				$imageuri = $this->imgSlug($product['label']);
+				$imageuri .= $this->img_loc . '/' . $imageuri . '.png';
+				$image = imagecreatefrompng($product['image']);
+				imagepng($image, $imageuri);
+			}
+		}
+		
+		
 		
 		$query='INSERT INTO products (
 			pid,
@@ -96,7 +111,7 @@ class productModel extends requestHandler{
 			$this->user['userid'],
 			$product['label'],
 			$product['inventory'],
-			$product['image']
+			$imageuri
 			);				
 				
 		$stmt=$this->pdo->prepare($query);
@@ -121,10 +136,25 @@ class productModel extends requestHandler{
 			':user'=>$this->user['userid']		
 		);
 		
+
+		
 		$insert ='';
-		if(isset($product['image'])){
+		$imageuri ='';
+		if(isset($product['image'])){	
+			//get and delete old image
+			$this->deleteImage($product['id']);			
+
+			if($product['image']!=''){
+				$imageuri = substr($product['label'],0, 100);				
+				$imageuri = $this->imgSlug($imageuri);
+				$random = substr(md5(mt_rand()), 0, 10);
+				$imageuri = $this->img_loc . '/' . $random . '_' . $imageuri . '.png';
+				
+				$image = imagecreatefrompng($product['image']);
+				imagepng($image, $imageuri);
+			}
 			$insert =',image=:image';
-			$p_array = array_merge($p_array, array(':image'=>$product['image']));
+			$p_array = array_merge($p_array, array(':image'=>$imageuri));
 		}
 
 		$query="UPDATE products SET 
@@ -141,6 +171,23 @@ class productModel extends requestHandler{
 		}
 		return $product['id'];
 	}	
+
+
+	//delete old image if exists
+	function deleteImage($pid){
+		$stmt=$this->pdo->prepare("SELECT image FROM products WHERE pid=? AND user = ?");
+		$stmt->execute(array($pid,$this->user['userid']));
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($stmt->rowCount()==0){
+			return false;
+		}	
+		if($row['image'] == ''){
+			return false;
+		}
+		unlink($this->doc_root.$row['image']);
+		return true;
+	}
+
 
 	function getIAddressById($i_addr_id){
 		$stmt=$this->pdo->prepare("SELECT * FROM i_addresses WHERE iaddr_id=?");
