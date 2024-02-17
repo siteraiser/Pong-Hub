@@ -3,9 +3,11 @@
 echo '<h1>'.$iaddress['label'].'</h1>';
 
 echo '<h2>'.$iaddress['comment'].'</h2>';
-echo '<img src="'.$iaddress['image'].'">';
+if($iaddress['image'] != ''){
+echo '<img style="max-width: 100%;" src="/'.$iaddress['image'].'">';
+}
 echo '<h3>Price: '.($iaddress['ask_amount'] * .00001).' DERO</h3>';
-echo '<h4>Sold By: '. $iaddress['username'].'</h4>';
+echo '<h4>Sold By:'. $iaddress['username'].'</h4>';
 ?>
 
 <div id="payment">
@@ -13,7 +15,7 @@ echo '<h4>Sold By: '. $iaddress['username'].'</h4>';
 <p>
 Copy and paste the integrated address into the send address to purchase the item described.
 </p>
-<div id="iaddress"><?php echo $iaddress['iaddr'];?></div><br>
+<div id="iaddress" style="overflow-wrap: break-word;"><?php echo $iaddress['iaddr'];?></div><br>
 <button id="copy_iaddress">Click to Copy Integrated Address</button>
 
 <p>
