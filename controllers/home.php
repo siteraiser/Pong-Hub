@@ -3,7 +3,48 @@ class home extends requestHandler{
 
 	public function index(){
 		$data['title']="Pong Hub: Home";
-		$data['meta']="";
+		$data['meta']="<style>
+		.clearfix::after {
+		  content: '';
+		  clear: both;
+		  display: table;
+		}
+		.products{	    
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.product{
+			width: 100%;
+			box-sizing: border-box;
+			border:1px solid green;
+			padding:10px;
+			margin:1%;
+		}
+		@media only screen and (min-width: 600px) {
+		  .product{
+			width: 48%;
+			padding:10px;
+		}
+		}
+		@media only screen and (min-width: 900px) {
+		  .product{
+			width: 31%;
+			padding:10px;
+		}
+		}	
+		
+		.product_image_wrapper{max-width:100px;}
+		.product_image{float:left;max-width: 100%;height:auto;margin-right: 10px;}
+		.iaddress{    
+			border: 1px solid #888;
+			padding: 10px;
+			display: inline-flex;
+			max-width: 200px;
+			flex-direction: column;
+		}
+		
+		</style>";
 		$data['description']="";
 		$data['keywords']="";		
 
