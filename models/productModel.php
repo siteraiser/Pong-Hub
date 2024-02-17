@@ -36,7 +36,7 @@ class productModel extends requestHandler{
 	
 	function getFullProduct($ia_id){
 		$stmt=$this->pdo->prepare("
-		SELECT * FROM i_addresses 
+		SELECT *,i_addresses.status AS ia_status FROM i_addresses 
 		INNER JOIN products ON i_addresses.product_id = products.pid
 		INNER JOIN users ON i_addresses.user = users.userid
 		WHERE i_addresses.id = ? AND i_addresses.user = products.user
@@ -84,11 +84,13 @@ class productModel extends requestHandler{
 
 		$imageuri ='';
 		if(isset($product['image'])){	
-					
-		//Always null for now but here if it is needed...
+			//Always null for now but here if it is needed...		
 			if($product['image']!=''){
-				$imageuri = $this->imgSlug($product['label']);
-				$imageuri .= $this->img_loc . '/' . $imageuri . '.png';
+				$imageuri = substr($product['label'],0, 100);				
+				$imageuri = $this->imgSlug($imageuri);
+				$random = substr(md5(mt_rand()), 0, 10);
+				$imageuri = $this->img_loc . '/' . $random . '_' . $imageuri . '.png';
+				
 				$image = imagecreatefrompng($product['image']);
 				imagepng($image, $imageuri);
 			}
