@@ -9,7 +9,21 @@ echo '<img style="max-width: 100%;" src="/'.$iaddress['image'].'">';
 echo '<h3>Price: '.($iaddress['ask_amount'] * .00001).' DERO</h3>';
 echo '<h4>Sold By:'. $iaddress['username'].'</h4>';
 ?>
-
+<p>
+<?php
+if($iaddress['ia_status']!=0){
+	if($iaddress['inventory']>0){
+		echo 'Inventory:'. $iaddress['inventory'];
+	}else if($iaddress['ia_inventory']>0){
+		echo 'Inventory:'. $iaddress['ia_inventory'];
+	}else{
+		echo 'Out of Stock';
+	}
+}else{
+	echo 'Item Currently Unavailable.';
+}
+?>
+</p>
 <div id="payment">
 
 <p>
