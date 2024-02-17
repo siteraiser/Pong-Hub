@@ -85,7 +85,7 @@ class productModel extends requestHandler{
 		$imageuri ='';
 		if(isset($product['image'])){	
 					
-		
+		//Always null for now but here if it is needed...
 			if($product['image']!=''){
 				$imageuri = $this->imgSlug($product['label']);
 				$imageuri .= $this->img_loc . '/' . $imageuri . '.png';
