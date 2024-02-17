@@ -18,9 +18,13 @@ class home extends requestHandler{
 			width: 100%;
 			box-sizing: border-box;
 			border:1px solid green;
+			background: #f7f7f7;
+			border-radius:4px;
 			padding:10px;
 			margin:1%;
+			font-family: sans-serif;
 		}
+		
 		@media only screen and (min-width: 600px) {
 		  .product{
 			width: 48%;
@@ -34,8 +38,25 @@ class home extends requestHandler{
 		}
 		}	
 		
-		.product_image_wrapper{max-width:100px;}
-		.product_image{float:left;max-width: 100%;height:auto;margin-right: 10px;}
+		.product h2,.product h3{
+			margin:2px;
+		}
+		
+		
+		.product_image_wrapper{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100px;
+			height: 100px;
+			float: left;
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+		.product_image{
+			max-width: 100%;
+			max-height: 100%;
+		}
 		.iaddress{    
 			border: 1px solid #888;
 			padding: 10px;
