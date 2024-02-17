@@ -1,6 +1,6 @@
 <h1>DERO Pong Store</h1>
 
-<div>
+<div class="products">
 <?php 
 
 
@@ -25,13 +25,28 @@ foreach($value as $product){
 	if($product['inventory'] == 0){
 		$use_ia_inventory = true;
 	}
-	$product_out .='<div style="border:1px solid green;margin:5px;padding:5px;">';
-	$product_out .='<img style="float:left;margin-right:10px;" src="'.$product['image'].'">';
-	$product_out .='<h2>'. strip($product['label']).'</h2>';
+	$product_out .='<div class="product clearfix">';
+	
+	if($product['image'] != ''){
+		$product_out .='<div class="product_image_wrapper"><img class="product_image" src="/'.$product['image'].'"></div>';
+	}
+	
+	$product_out .='<h2>'. strip($product['label']).'</h2>';	
+	
+	$product_out .='<div class="product_info">';
+	
 	$product_out .='<h3>Seller: '. strip($product['username']).'</h3>';
+	
 	if(!$use_ia_inventory){
 		$product_out .='Inventory: '.$product['inventory'];
 	}	
+	$product_out .='</div>';
+	
+
+	
+	
+	
+	
 	$ias_have_inv = false;
 	$ia_out='';
 	foreach($product['iaddress'] as $ia){
