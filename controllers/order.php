@@ -8,6 +8,14 @@ class order extends requestHandler{
 		<style>.hidden{height:0;overflow:hidden;}
 		.warning{border: 2px solid red;}
 		.success{border: 2px solid green;}
+		.product-wrapper{display:block;}
+		.content-block{padding:10px;}
+		@media only screen and (min-width: 600px) {
+			.product-wrapper{display:flex;}
+			.content-block{
+				width:50%;			
+			}
+		}
 		</style>";
 		$data['description']="";
 		$data['keywords']="";		
