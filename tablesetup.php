@@ -3,7 +3,9 @@ CREATE TABLE products (
 	pid smallint(6) unsigned NULL,
 	user smallint(6) unsigned NULL,
 	label varchar(1500) NULL,
+	details varchar(2500) NULL,
 	image varchar(500) NULL,
+	scid varchar(64) NULL,	
 	inventory int(25),
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id)
@@ -17,6 +19,7 @@ CREATE TABLE i_addresses (
 	iaddr varchar(1500) NULL,
 	ask_amount int(25) NULL,
 	comment varchar(500) NULL,
+	ia_scid varchar(64) NULL,	
 	status tinyint(1) NULL,
 	ia_inventory int(25) NULL,	
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
@@ -41,4 +44,3 @@ CREATE TABLE users (
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (userid)
 ) ENGINE=InnoDB;
-
