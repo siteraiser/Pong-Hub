@@ -57,12 +57,14 @@ class home extends requestHandler{
 			max-width: 100%;
 			max-height: 100%;
 		}
+		.iaddresses{
+			display:flex;
+			flex-wrap: wrap;
+		}
 		.iaddress{    
 			border: 1px solid #888;
 			padding: 10px;
-			display: inline-flex;
-			max-width: 200px;
-			flex-direction: column;
+			flex: 1 1 42%;
 		}
 		
 		</style>";
@@ -75,10 +77,47 @@ class home extends requestHandler{
 			$product['iaddress'] = $this->productModel->getIAddresses($product);		
 		}
 	
+		$products_array = [];
+		foreach($product_results as $pkey => &$product){ 
+			$product_array = [];
+			$use_ia_inventory = false;
+			if($product['inventory'] == 0){
+				$use_ia_inventory = true;
+			}
+
+			if($product['username'] != ''){
+				$product['address'] = $product['username'];
+			}	
+			
+			if($use_ia_inventory){
+				$product['inventory'] = false;
+			}	
+			
+			$ias_have_inv = false;
+			$ia_out='';
+			foreach($product['iaddress'] as $iakey => &$ia){
+				if(
+				($use_ia_inventory && $ia['ia_inventory'] < 1) ||
+				$ia['status'] == 0){				
+					unset($product['iaddress'][$iakey]);
+				}			
+						
+				
+				if(!$use_ia_inventory){
+					$ia['ia_inventory'] = false;
+				}
+				
+			}
+			
+			if(empty($product['iaddress'])){
+				unset($product_results[$pkey]);
+			}
+		}
+		unset($product);
+		unset($ia);
 	
 	
-	
-		$data['value']=$product_results;
+		$data['product_results']=$product_results;
 		
 		$this->addView('header',$data);	
 		$this->addView('home',$data);
