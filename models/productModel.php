@@ -102,16 +102,18 @@ class productModel extends requestHandler{
 			pid,
 			user,
 			label,
+			scid,
 			inventory,
 			image
 			)
 			VALUES
-			(?,?,?,?,?)';	
+			(?,?,?,?,?,?)';	
 		
 		$array=array(
 			$product['id'],
 			$this->user['userid'],
 			$product['label'],
+			$product['scid'],
 			$product['inventory'],
 			$imageuri
 			);				
@@ -133,6 +135,8 @@ class productModel extends requestHandler{
 		
 		$p_array = array(
 			':label'=>$product['label'],
+			':details'=>$product['details'],
+			':scid'=>$product['scid'],
 			':inventory'=>$product['inventory'],
 			':pid'=>$product['id'],
 			':user'=>$this->user['userid']		
@@ -161,6 +165,8 @@ class productModel extends requestHandler{
 
 		$query="UPDATE products SET 
 			label=:label,
+			details=:details,
+			scid=:scid,
 			inventory=:inventory
 			$insert
 			WHERE pid=:pid AND user=:user";
@@ -209,10 +215,12 @@ class productModel extends requestHandler{
 	}
 
 	function insertIAddress($i_address){
+				
+			
 		if(!$this->sameAddress($i_address['iaddr'],$this->user['wallet'])){
 			return false;
 		}
-		
+	
 		$query='INSERT INTO i_addresses (
 			iaddr_id,
 			user,
@@ -220,11 +228,12 @@ class productModel extends requestHandler{
 			iaddr,
 			ask_amount,
 			comment,
+			ia_scid,
 			status,
 			ia_inventory
 			)
 			VALUES
-			(?,?,?,?,?,?,?,?)';	
+			(?,?,?,?,?,?,?,?,?)';	
 		
 		$array=array(
 			$i_address['id'],
@@ -233,6 +242,7 @@ class productModel extends requestHandler{
 			$i_address['iaddr'],
 			$i_address['ask_amount'],
 			$i_address['comment'],
+			$i_address['ia_scid'],
 			$i_address['status'],
 			$i_address['ia_inventory']
 			);				
@@ -242,6 +252,9 @@ class productModel extends requestHandler{
 		if($stmt->rowCount()==0){
 			return false;
 		}
+		
+		
+
 		return $this->pdo->lastInsertId('id');
 	}
 	
@@ -256,6 +269,7 @@ class productModel extends requestHandler{
 		}
 		
 		$query='UPDATE i_addresses SET 
+			ia_scid=:ia_scid,
 			status=:status,
 			ia_inventory=:ia_inventory
 			WHERE iaddr=:iaddr';
@@ -264,6 +278,7 @@ class productModel extends requestHandler{
 			
 		$stmt=$this->pdo->prepare($query);
 		$stmt->execute(array(
+			':ia_scid'=>$i_address['ia_scid'],
 			':status'=>$i_address['status'],
 			':ia_inventory'=>$i_address['ia_inventory'],			
 			':iaddr'=>$i_address['iaddr']));				
@@ -295,10 +310,14 @@ class productModel extends requestHandler{
 	}
 	
 	function sameAddress($iaddr,$waddr){
+		
+		
+		
 		$ia_frag = ltrim($iaddr,"deroi1");
 		$wa_frag = ltrim($waddr,"dero1");
 		$ia_frag = substr($ia_frag, 0, 53);
 		$wa_frag = substr($wa_frag, 0, 53);
+		
 		
 		if($ia_frag != $wa_frag){
 			return false;
