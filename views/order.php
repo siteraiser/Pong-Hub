@@ -1,11 +1,35 @@
 <?php
+	function strip($html){	
+		$html = preg_replace('~<\s*\bscript\b[^>]*>(.*?)<\s*\/\s*script\s*>~is', '', $html);//remove scripts
+		$html = preg_replace('~<\s*\bstyle\b[^>]*>(.*?)<\s*\/\s*style\s*>~is', '', $html);		
+		$content1=strip_tags($html);	
+		return $content1;
+	}
 
-echo '<h1>'.$iaddress['label'].'</h1>';
 
-echo '<h2>'.$iaddress['comment'].'</h2>';
+
+echo '<h1>'.strip($iaddress['label']).'</h1>';
+
+
+?>
+<div class="product-wrapper">
+<div class="content-block">
+
+<?php
 if($iaddress['image'] != ''){
 echo '<img style="max-width: 100%;" src="/'.$iaddress['image'].'">';
 }
+
+
+?>
+
+</div><!-- end of div-content-block -->
+
+
+<div class="content-block">
+
+<?php
+echo '<h2>'.strip($iaddress['comment']).'</h2>';
 echo '<h3>Price: '.($iaddress['ask_amount'] * .00001).' DERO</h3>';
 echo '<h4>Sold By:'. $iaddress['username'].'</h4>';
 ?>
@@ -13,18 +37,32 @@ echo '<h4>Sold By:'. $iaddress['username'].'</h4>';
 <?php
 if($iaddress['ia_status']!=0){
 	if($iaddress['inventory']>0){
-		echo 'Inventory:'. $iaddress['inventory'];
+		echo 'Available:'. $iaddress['inventory'];
 	}else if($iaddress['ia_inventory']>0){
-		echo 'Inventory:'. $iaddress['ia_inventory'];
+		echo 'Available:'. $iaddress['ia_inventory'];
 	}else{
 		echo 'Out of Stock';
 	}
 }else{
 	echo 'Item Currently Unavailable.';
 }
+
+
+//See if is a smart contract.
+$scid = $iaddress['scid'];
+if($iaddress['ia_scid'] != ''){
+	
+$scid =	$iaddress['ia_scid'];
+}
+echo '<div class="details">Details: <p>'. nl2br(strip($iaddress['details'])).'</p></div>';
+if($scid != ''){
+	echo '<p style="overflow-wrap: break-word;">SCID: '.$scid.'</p>';
+}
+
+
 ?>
 </p>
-<div id="payment">
+<div id="payment_instruction_1">
 
 <p>
 Copy and paste the integrated address into the send address to purchase the item described.
@@ -32,11 +70,21 @@ Copy and paste the integrated address into the send address to purchase the item
 <div id="iaddress" style="overflow-wrap: break-word;"><?php echo $iaddress['iaddr'];?></div><br>
 <button id="copy_iaddress">Click to Copy Integrated Address</button>
 
+</div>
+
+<?php 
+
+
+if($scid == ''){
+?>
+
+<div id="payment_instruction_2">
+
 <p>
 After completing your purchase, check for the Order ID (uuid) in your recent transactions list (view history -> normal). 
 </p>
 <p>
-When you have recieved the response from the seller with your order ID Enter it below to begin shipping address submission (if required). 
+When you have recieved the response from the seller with your order ID enter it below to begin shipping address submission (if required). 
 </p>
 
 </div>
@@ -95,13 +143,17 @@ Order Number: <input id="uuid" type="text" placeholder="Enter Order ID Here (7b5
 	</div>
 
 
+<?php 
+}
+?>
 
-
-
+</div><!-- end of div-content-block -->
+</div><!-- end of div-product-wrapper -->
 
 
 <script>
-var payment = document.getElementById("payment");
+var payment_instruction_1 = document.getElementById("payment_instruction_1");
+var payment_instruction_2 = document.getElementById("payment_instruction_2");
 var iaddress = document.getElementById("iaddress");
 var copy_iaddress_button = document.getElementById('copy_iaddress');
 copy_iaddress_button.addEventListener('click',() => { copy('iaddress'); }, false);
@@ -153,7 +205,8 @@ function checkOrderNumber() {
 
 		if(result.success == true){	
 			id.value = result.sid;
-			payment.classList.add('hidden');
+			payment_instruction_1.classList.add('hidden');
+			payment_instruction_2.classList.add('hidden');
 			uuid.disabled = true;
 			address_instruction_1.classList.remove('hidden');
 			address_div.classList.remove('hidden');
