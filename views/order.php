@@ -75,7 +75,7 @@ Copy and paste the integrated address into the send address to purchase the item
 <?php 
 
 
-if($scid == ''){
+if(($scid == '' && $iaddress['p_type'] == 'general') || $iaddress['p_type'] == 'physical'){
 ?>
 
 <div id="payment_instruction_2">
