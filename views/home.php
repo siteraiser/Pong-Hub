@@ -27,7 +27,7 @@ foreach($product_results as $product){
 	}
 	$product_out .='<h2>'. substr(strip($product['label']), 0, 50).'</h2>';		
 	$product_out .='<div class="product_info">';	
-	$product_out .='<h3>Seller: '. strip($product['username']).'</h3>';
+	$product_out .='<h3 style="overflow-wrap: break-word;">Seller: '. strip($product['username']).'</h3>';
 	
 	if($product['inventory'] != false){
 		$product_out .='Available: '.$product['inventory'];
