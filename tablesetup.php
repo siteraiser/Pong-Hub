@@ -2,6 +2,7 @@ CREATE TABLE products (
 	id smallint(6) unsigned NOT NULL auto_increment,
 	pid smallint(6) unsigned NULL,
 	user smallint(6) unsigned NULL,
+	p_type varchar(20) NULL,
 	label varchar(1500) NULL,
 	details varchar(2500) NULL,
 	image varchar(500) NULL,
@@ -44,3 +45,4 @@ CREATE TABLE users (
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (userid)
 ) ENGINE=InnoDB;
+
