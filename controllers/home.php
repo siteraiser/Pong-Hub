@@ -85,8 +85,8 @@ class home extends requestHandler{
 				$use_ia_inventory = true;
 			}
 
-			if($product['username'] != ''){
-				$product['address'] = $product['username'];
+			if($product['username'] == ''){
+				$product['username'] = 'Username Not Provided';
 			}	
 			
 			if($use_ia_inventory){
