@@ -16,6 +16,8 @@ class order extends requestHandler{
 				width:50%;			
 			}
 		}
+		.product-wrapper.no-image .image-block{display:none;}
+		.product-wrapper.no-image .content-block{width:100%;}
 		</style>";
 		$data['description']="";
 		$data['keywords']="";		
