@@ -101,17 +101,19 @@ class productModel extends requestHandler{
 		$query='INSERT INTO products (
 			pid,
 			user,
+			p_type,
 			label,
 			scid,
 			inventory,
 			image
 			)
 			VALUES
-			(?,?,?,?,?,?)';	
+			(?,?,?,?,?,?,?)';	
 		
 		$array=array(
 			$product['id'],
 			$this->user['userid'],
+			$product['p_type'],
 			$product['label'],
 			$product['scid'],
 			$product['inventory'],
@@ -134,6 +136,7 @@ class productModel extends requestHandler{
 		*/
 		
 		$p_array = array(
+			':p_type'=>$product['p_type'],
 			':label'=>$product['label'],
 			':details'=>$product['details'],
 			':scid'=>$product['scid'],
@@ -164,6 +167,7 @@ class productModel extends requestHandler{
 		}
 
 		$query="UPDATE products SET 
+			p_type=:p_type,
 			label=:label,
 			details=:details,
 			scid=:scid,
