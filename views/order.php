@@ -12,14 +12,13 @@ echo '<h1>'.strip($iaddress['label']).'</h1>';
 
 
 ?>
-<div class="product-wrapper">
-<div class="content-block">
+<div class="product-wrapper<?php echo($iaddress['image'] != ''?'':' no-image'); ?>">
+<div class="content-block image-block">
 
 <?php
 if($iaddress['image'] != ''){
 echo '<img style="max-width: 100%;" src="/'.$iaddress['image'].'">';
 }
-
 
 ?>
 
@@ -31,7 +30,11 @@ echo '<img style="max-width: 100%;" src="/'.$iaddress['image'].'">';
 <?php
 echo '<h2>'.strip($iaddress['comment']).'</h2>';
 echo '<h3>Price: '.($iaddress['ask_amount'] * .00001).' DERO</h3>';
-echo '<h4>Sold By:'. $iaddress['username'].'</h4>';
+
+if($iaddress['username'] == ''){
+	$iaddress['username'] = $iaddress['wallet'];
+}	
+echo '<h4 style="overflow-wrap: break-word;">Sold By: <span>'. $iaddress['username'].'</span></h4>';
 ?>
 <p>
 <?php
@@ -65,7 +68,7 @@ if($scid != ''){
 <div id="payment_instruction_1">
 
 <p>
-Copy and paste the integrated address into the send address to purchase the item described.
+Copy and paste the integrated address as the send to address to purchase the item described.
 </p>
 <div id="iaddress" style="overflow-wrap: break-word;"><?php echo $iaddress['iaddr'];?></div><br>
 <button id="copy_iaddress">Click to Copy Integrated Address</button>
