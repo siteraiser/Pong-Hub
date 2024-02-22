@@ -186,11 +186,29 @@ function copyIAddress() {
 	navigator.clipboard.writeText(iaddress.value);
 }
 */
+var crc32=function(r){for(var a,o=[],c=0;c<256;c++){a=c;for(var f=0;f<8;f++)a=1&a?3988292384^a>>>1:a>>>1;o[c]=a}for(var n=-1,t=0;t<r.length;t++)n=n>>>8^o[255&(n^r.charCodeAt(t))];return(-1^n)>>>0};
 
 var uuid = document.getElementById('uuid');
 var id = document.getElementById('id');
 uuid.addEventListener('input', checkOrderNumber, false);
+function checkOrderNumber() {
+	
+	var order_number = uuid.value
+	if(order_number !=''){
 
+
+	
+	id.value = crc32(order_number);
+			payment_instruction_1.classList.add('hidden');
+			payment_instruction_2.classList.add('hidden');
+			uuid.disabled = true;
+			address_instruction_1.classList.remove('hidden');
+			address_div.classList.remove('hidden');
+			copy_section.classList.remove('hidden');
+	
+	}
+	
+}/*	
 function checkOrderNumber() {
 	async function checkOrder(data) {
 	  try {
@@ -231,7 +249,7 @@ function checkOrderNumber() {
 		checkOrder(data);
 	}
 }
-
+*/
 /*
 
 
