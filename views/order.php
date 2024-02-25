@@ -29,7 +29,7 @@ echo '<img style="max-width: 100%;" src="/'.$iaddress['image'].'">';
 
 <?php
 echo '<h2>'.strip($iaddress['comment']).'</h2>';
-echo '<h3>Price: '.($iaddress['ask_amount'] * .00001).' DERO</h3>';
+echo '<h3>Price: '.sprintf('%.5F',($iaddress['ask_amount'] * .00001)).' DERO</h3>';
 
 if($iaddress['username'] == ''){
 	$iaddress['username'] = $iaddress['wallet'];
