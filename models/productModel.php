@@ -103,18 +103,20 @@ class productModel extends requestHandler{
 			user,
 			p_type,
 			label,
+   			details,
 			scid,
 			inventory,
 			image
 			)
 			VALUES
-			(?,?,?,?,?,?,?)';	
+			(?,?,?,?,?,?,?,?)';	
 		
 		$array=array(
 			$product['id'],
 			$this->user['userid'],
 			$product['p_type'],
 			$product['label'],
+			$product['details'],
 			$product['scid'],
 			$product['inventory'],
 			$imageuri
