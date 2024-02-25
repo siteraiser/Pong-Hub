@@ -47,7 +47,7 @@ foreach($product_results as $product){
 		if($ia['ia_inventory'] != false){
 			$ia_out .='<div>Available:'.$ia['ia_inventory'].'</div>';
 		}
-		$ia_out .='<div>Price:'. ($ia['ask_amount'] * .00001) .' DERO</div>';
+		$ia_out .='<div>Price:'. sprintf('%.5F',($ia['ask_amount'] * .00001)) .' DERO</div>';
 		$ia_out .='<div><a href="/order/'.$ia['id'].'">Click Here to Order</a></div>';
 
 		$ia_out .='</div>';
