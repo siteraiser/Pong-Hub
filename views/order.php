@@ -1,11 +1,16 @@
 <?php
 	function strip($html){	
+	    //&#60; &#x3C; are lte
 		$html = preg_replace('~<\s*\bscript\b[^>]*>(.*?)<\s*\/\s*script\s*>~is', '', $html);//remove scripts
 		$html = preg_replace('~<\s*\bstyle\b[^>]*>(.*?)<\s*\/\s*style\s*>~is', '', $html);		
 		$content1=strip_tags($html);	
+		$order = array("&#60;","&#x3C;");
+		$replace = ' ';
+
+		// Processes \r\n's first so they aren't converted twice.
+		$content1 = str_replace($order, $replace, $content1);
 		return $content1;
 	}
-
 
 
 echo '<h1>'.strip($iaddress['label']).'</h1>';
