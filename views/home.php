@@ -4,12 +4,11 @@
 <?php 
 
 
-
 	function strip($html){	
 		$html = preg_replace('~<\s*\bscript\b[^>]*>(.*?)<\s*\/\s*script\s*>~is', '', $html);//remove scripts
 		$html = preg_replace('~<\s*\bstyle\b[^>]*>(.*?)<\s*\/\s*style\s*>~is', '', $html);		
 		$content1=strip_tags($html);	
-		$order = array("\r\n", "\n", "\r","&nbsp;");
+		$order = array("\r\n", "\n", "\r","&nbsp;","&#60;","&#x3C;");
 		$replace = ' ';
 
 		// Processes \r\n's first so they aren't converted twice.
