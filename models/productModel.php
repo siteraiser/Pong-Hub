@@ -203,7 +203,7 @@ class productModel extends requestHandler{
 	}
 
 
-	function getIAddressById($i_addr_id,){
+	function getIAddressById($i_addr_id){
 		$stmt=$this->pdo->prepare("SELECT * FROM i_addresses WHERE iaddr_id=? AND user = ?");
 		$stmt->execute(array($i_addr_id,$this->user['userid']));
 		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
