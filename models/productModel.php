@@ -80,7 +80,9 @@ class productModel extends requestHandler{
 	}
 
 	function insertProduct($product){
-		
+		if($this->user['userid']==''){
+	            return false;
+	        }
 
 		$imageuri ='';
 		if(isset($product['image'])){	
