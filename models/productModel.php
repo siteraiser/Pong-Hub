@@ -73,6 +73,13 @@ class productModel extends requestHandler{
 
 	function submitProduct($product){
 	
+	
+		if(isset($product['action'])){
+			if($product['action'] == 'delete'){
+				return $this->deleteProduct($product);
+			}
+		}
+	
 		if(empty($this->getProductById($product['id']))){
 			return $this->insertProduct($product);			
 		}
@@ -81,8 +88,8 @@ class productModel extends requestHandler{
 
 	function insertProduct($product){
 		if($this->user['userid']==''){
-	            return false;
-	        }
+            return false;
+        }
 
 		$imageuri ='';
 		if(isset($product['image'])){	
@@ -94,7 +101,7 @@ class productModel extends requestHandler{
 				$imageuri = $this->img_loc . '/' . $random . '_' . $imageuri . '.png';
 				
 				$image = imagecreatefrompng($product['image']);
-				imagepng($image, $imageuri);
+				imagepng($image, $this->doc_root.$imageuri);
 			}
 		}
 		
@@ -105,7 +112,7 @@ class productModel extends requestHandler{
 			user,
 			p_type,
 			label,
-   			details,
+			details,
 			scid,
 			inventory,
 			image
@@ -164,7 +171,7 @@ class productModel extends requestHandler{
 				$imageuri = $this->img_loc . '/' . $random . '_' . $imageuri . '.png';
 				
 				$image = imagecreatefrompng($product['image']);
-				imagepng($image, $imageuri);
+				imagepng($image, $this->doc_root.$imageuri);
 			}
 			$insert =',image=:image';
 			$p_array = array_merge($p_array, array(':image'=>$imageuri));
@@ -187,8 +194,32 @@ class productModel extends requestHandler{
 		}
 		return $product['id'];
 	}	
-
-
+	
+	
+	function deleteProduct($product){
+		
+		//delete image first...
+		$this->deleteImage($product['id']);
+		
+		$stmt=$this->pdo->prepare("	
+			DELETE FROM i_addresses 
+			WHERE product_id = ? AND user = ? ;
+			
+			DELETE FROM products WHERE pid = ? AND user = ? 
+		");
+		
+		$stmt->execute([$product['id'],$this->user['userid'],$product['id'],$this->user['userid']]);		
+		if($stmt->rowCount()==0){
+			return false;
+		}
+		return true;
+		
+	}
+	
+	
+	
+	
+	
 	//delete old image if exists
 	function deleteImage($pid){
 		$stmt=$this->pdo->prepare("SELECT image FROM products WHERE pid=? AND user = ?");
@@ -215,7 +246,16 @@ class productModel extends requestHandler{
 
 
 	function submitIAddress($i_address){
-	
+
+		if(isset($i_address['action'])){
+			if($i_address['action'] == 'delete'){
+				return $this->deleteIAddress($i_address);
+			}
+		}
+		
+		
+		
+		
 		if(empty($this->getIAddressById($i_address['id']))){
 			return $this->insertIAddress($i_address);			
 		}
@@ -296,6 +336,21 @@ class productModel extends requestHandler{
 		}
 		return $i_address['id'];
 	}	
+	
+	function deleteIAddress($i_address){
+		
+		$stmt=$this->pdo->prepare("	
+			DELETE FROM i_addresses 
+			WHERE iaddr_id = ? AND user = ?
+		");
+		
+		$stmt->execute([$i_address['id'],$this->user['userid']]);		
+		if($stmt->rowCount()==0){
+			return false;
+		}
+		return true;
+		
+	}
 	
 	function newTX($uuid){
 		
