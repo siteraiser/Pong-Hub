@@ -336,7 +336,7 @@ function fits(query){
 	}
 }
 function valid(element){
-	if(element.value != '' || element.id =='l2'){
+	if(element.value != '' || element.id =='uuid' || element.id =='l2'){
 		return true;
 	}
 	return false;
@@ -386,16 +386,17 @@ function validate(event){
 		}else if(!fits(query)){
 			copy_data_button.disabled = true;
 			address_is_ready = false;
-			senddata.innerHTML = 'Too Long!';
+			senddata.innerHTML = '<span style="color:red;">Too Long! </span>';
 		}else if(!all_filled){
 			copy_data_button.disabled = true;
 			address_is_ready = false;
-			senddata.innerHTML = 'Finish Filling Out the Address Form';
+			senddata.innerHTML = '<span style="color:red;">Finish Filling Out the Address Form </span>';
 		
 		}
 	}else{
+		address_is_ready = false;
 		copy_data_button.disabled = true;
-		senddata.innerHTML = 'Finish Filling Out the Address Form';
+		senddata.innerHTML = '<span style="color:red;">Finish Filling Out the Address Form </span>';
 		
 	}
 	
