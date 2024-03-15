@@ -107,9 +107,15 @@ if($scid != ''){
 }
 
 
+$hidden = '';
+if($iaddress['p_type'] == 'physical' || $stock == 'Out of Stock' || $stock == 'Item Currently Unavailable.'){
+	$hidden = 'hidden';
+}
+
+
 ?>
 </p>
-<div id="payment_instruction_1" class="hidden">
+<div id="payment_instruction_1" class="<?php echo $hidden;?>">
 
 <p>
 Copy and paste the integrated address as the send to address to purchase the item described.
@@ -206,6 +212,22 @@ Order Number: <input id="uuid" disabled="true" type="text" placeholder="Enter Or
 </div><!-- end of div-content-block -->
 </div><!-- end of div-product-wrapper -->
 
+<?php 
+
+
+if($iaddress['p_type'] == 'physical'){
+?>
+<br>
+<div style="background: #0d5328; padding:20px">
+    <h3 style="color: #fff;">How to submit your shipping address after receiving your order id. </h3>
+  <div>
+    <video  controls="" controlslist="nodownload" height="1080" poster="" width="1920" style="max-width:100%; height:auto;" id="video"><source src="" type="video/webm"><source src="" type="video/mp4"></video>
+  </div>
+</div>
+
+<?php 
+}
+?>
 
 <script>
 var payment_instruction_1 = document.getElementById("payment_instruction_1");
@@ -271,7 +293,7 @@ function checkOrderNumber(event) {
 	
 	if(!valid){
 		
-		senddata.innerHTML = '<span style="color:red;">Invalid order number, (copy payload) from the seller response containing your order id (UUID).</span>';
+		senddata.innerHTML += '<span style="color:red;">Invalid order number, (copy payload) from the seller response containing your order id (UUID).</span>';
 		copy_section.classList.remove("success");
 		copy_data_button.disabled = true;
 	}
@@ -373,7 +395,7 @@ function validate(event){
 		}
 	}else{
 		copy_data_button.disabled = true;
-		senddata.innerHTML = '';
+		senddata.innerHTML = 'Finish Filling Out the Address Form';
 		
 	}
 	
