@@ -5,7 +5,10 @@ class order extends requestHandler{
 		$ia_id = $this->url_segments[1];
 		$data['title']="Order Product";
 		$data['meta']="
-		<style>.hidden{height:0;overflow:hidden;}
+		<style>
+		html,body{pdding:0;margin:0;border:0;}
+		*{box-sizing:border-box;}
+		.hidden{height:0;overflow:hidden;visibility:hidden;}
 		.warning{border: 2px solid red;}
 		.success{border: 2px solid green;}
 		.product-wrapper{display:block;}
@@ -18,6 +21,26 @@ class order extends requestHandler{
 		}
 		.product-wrapper.no-image .image-block{display:none;}
 		.product-wrapper.no-image .content-block{width:100%;}
+		.options{
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		.ia_comment  { 
+		display:inline-block;padding:3px;
+		}
+		.selected  { 
+		border:solid 2px green;
+		font-weight:bold;
+		}
+		.greyed_out{color:grey;}
+		.checkmark  {
+	    color:green;
+		}
+		
+		#address input,#uuid{margin:5px;}
+		#copy_section{padding:5px;}
+		#senddata{padding:5px;}
 		</style>";
 		$data['description']="";
 		$data['keywords']="";		
@@ -26,7 +49,14 @@ class order extends requestHandler{
 	    $product_results = $this->productModel->getFullProduct($ia_id);	
 	
 		$data['iaddress']=$product_results;
-		
+		$data['iaddresses']=$this->productModel->getIntegratedAddressesByPid($product_results['user'],$product_results['product_id']);
+	/*	echo'<pre>';
+		var_dump($data['iaddress']);
+		echo'</pre>';
+		echo'<pre>';
+		var_dump($data['iaddresses']);
+		echo'</pre>';
+*/
 		$this->addView('header',$data);	
 		$this->addView('order',$data);
 		$this->addView('footer',$data);
