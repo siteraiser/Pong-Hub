@@ -33,18 +33,31 @@ class productModel extends requestHandler{
 	
 	
 	//orders
-	
+
+		
 	function getFullProduct($ia_id){
 		$stmt=$this->pdo->prepare("
-		SELECT *,i_addresses.status AS ia_status FROM i_addresses 
-		INNER JOIN products ON i_addresses.product_id = products.pid
-		INNER JOIN users ON i_addresses.user = users.userid
+		SELECT *,i_addresses.id ,i_addresses.status AS ia_status FROM i_addresses 
+		RIGHT JOIN products ON i_addresses.product_id = products.pid
+		RIGHT JOIN users ON i_addresses.user = users.userid
 		WHERE i_addresses.id = ? AND i_addresses.user = products.user
 		");
 		$stmt->execute(array($ia_id));
-		$rows = $stmt->fetch(PDO::FETCH_ASSOC);
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $row;
+	}
+
+	function getIntegratedAddressesByPid($user,$pid){
+		$stmt=$this->pdo->prepare("
+		SELECT *,i_addresses.status AS ia_status FROM i_addresses 
+		WHERE i_addresses.product_id = ? AND i_addresses.user = ?
+		");
+		$stmt->execute(array($pid,$user));
+		$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		return $rows;
 	}
+
+
 	
 	function checkOrder($uuid){
 		$stmt=$this->pdo->prepare("
@@ -352,16 +365,24 @@ class productModel extends requestHandler{
 		
 	}
 	
-	function newTX($uuid){
+	function newTX($params){
+		$ia_id = '';
+		if(isset($params['ia_id'])){
+			$ia_id = $params['ia_id'];
+		}
 		
 		$query='INSERT INTO orders (
-			uuid
+			uuid,
+			ia_id,
+			userid
 			)
 			VALUES
-			(?)';	
+			(?,?,?)';	
 		
 		$array=array(
-			$uuid
+			$params['uuid'],
+			$ia_id,
+			$this->user['userid']
 			);				
 				
 		$stmt=$this->pdo->prepare($query);
