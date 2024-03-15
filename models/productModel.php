@@ -107,9 +107,15 @@ if($scid != ''){
 }
 
 
+$hidden = '';
+if($iaddress['p_type'] == 'physical' || $stock == 'Out of Stock' || $stock == 'Item Currently Unavailable.'){
+	$hidden = 'hidden';
+}
+
+
 ?>
 </p>
-<div id="payment_instruction_1" class="<?php echo ($iaddress['p_type'] == 'physical'?'hidden':'');?>">
+<div id="payment_instruction_1" class="<?php echo $hidden;?>">
 
 <p>
 Copy and paste the integrated address as the send to address to purchase the item described.
