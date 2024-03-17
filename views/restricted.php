@@ -7,12 +7,21 @@
 <p>
 Access level <?php echo $access_level; ?> granted.
 </p>
+<?php if($access_level == 1){ ?>
 <p>
-You are cordially invited to join the Discord Channel for Dero Pong Hub! <a href="https://discord.gg/mnySnYAb">https://discord.gg/mnySnYAb</a>
+You are cordially invited to join the Secret Discord Channel where there is a PHP Pong Server thread! <a href="https://discord.gg/vrGGCqpV">https://discord.gg/vrGGCqpV</a>
 </p>
-<?php }else{?>
+
+<?php }else if($access_level == 2) { ?>
 <p>
-You don't have access to this content. Check the store to purchase an access link.
+You are cordially invited to join the <a href="https://discord.gg/mnySnYAb">Secret Discord Channel</a> where there is a PHP Pong Server thread and the new discord channel for <a href="https://discord.gg/mnySnYAb">Dero Pong Hub</a>! 
 </p>
-<?php }?>
+<?php }else{ ?>
+<p>
+You don't have access to this content. You can purchase an access link <a href="https://www.siteraiser.com/dero-pong-store/order/23">here</a>.
+</p>
+<?php } ?>
+
+
+<?php } ?>
 </div>
