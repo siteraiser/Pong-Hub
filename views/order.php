@@ -221,7 +221,7 @@ if($iaddress['p_type'] == 'physical'){
 <div style="background: #0d5328; padding:20px">
     <h3 style="color: #fff;">How to submit your shipping address after receiving your order id. </h3>
   <div>
-    <video  controls="" controlslist="nodownload" height="1080" poster="" width="1920" style="max-width:100%; height:auto;" id="video"><source src="" type="video/webm"><source src="" type="video/mp4"></video>
+    <video  controls="" controlslist="nodownload" height="1080" poster="https://www.siteraiser.com/dero-pong-store/videos/video.PNG" width="1920" style="max-width:100%; height:auto;" id="video"><source src="https://www.siteraiser.com/dero-pong-store/videos/video.webm" type="video/webm"><source src="https://www.siteraiser.com/dero-pong-store/videos/video.mp4" type="video/mp4"></video>
   </div>
 </div>
 
