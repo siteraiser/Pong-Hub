@@ -30,6 +30,8 @@ CREATE TABLE i_addresses (
 CREATE TABLE orders (
 	id smallint(6) unsigned NOT NULL auto_increment,
 	uuid varchar(128) NULL,
+	ia_id smallint(6) unsigned  NULL,
+	user smallint(6) unsigned  NULL,
 	lastupdate timestamp DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id)
 ) ENGINE=InnoDB;
