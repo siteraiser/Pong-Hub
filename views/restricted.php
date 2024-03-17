@@ -14,7 +14,7 @@ You are cordially invited to join the Secret Discord Channel where there is a PH
 
 <?php }else if($access_level == 2) { ?>
 <p>
-You are cordially invited to join the <a href="https://discord.gg/mnySnYAb">Secret Discord Channel</a> where there is a PHP Pong Server thread and the new discord channel for <a href="https://discord.gg/mnySnYAb">Dero Pong Hub</a>! 
+You are cordially invited to join the <a href="https://discord.gg/mnySnYAb">Secret Discord Channel</a> where there is a PHP Pong Server thread and to join the new discord channel for <a href="https://discord.gg/mnySnYAb">Dero Pong Hub</a>! 
 </p>
 <?php }else{ ?>
 <p>
