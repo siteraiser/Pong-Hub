@@ -155,7 +155,7 @@ Enter your shipping address details and then copy and send the generated message
 <p id="address_success_message" class="hidden">
 Your shipping address is will fit into the required address submission message.<br>
 After completing your purchase, check for the Order ID (uuid) in your recent transactions list (view history -> normal). <br>
-When you have recieved the response from the seller with your order ID enter it below to begin shipping address submission (if required). Make sure to save at least .00003 Dero to cover the message fees! 
+When you have recieved the response from the seller with your order ID enter it below to begin shipping address submission (if required). Make sure to save enough Dero to cover the message fees! 
 </p>
 <!-- Address Message Generator autocomplete="false"-->
 
