@@ -321,8 +321,8 @@ if($iaddress['p_type'] == 'physical'){
             copy_section.classList.add("success");       
             
         }
-        validate(event);
-        console.log(valid)
+      //  validate(event);
+        //  console.log(valid)
         if(!valid){
             
             senddata.innerHTML = '<span style="color:red;">Invalid order number, (copy payload) from the seller response containing your order id (UUID).</span>';
