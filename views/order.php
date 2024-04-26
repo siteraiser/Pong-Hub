@@ -279,13 +279,15 @@ if($iaddress['p_type'] == 'physical'){
         during_selected = false
         during_after_message.innerHTML = after_message;
         after_uuid.classList.remove('hidden');
+        validate(event);
         checkOrderNumber(event)
     }else{
         during_selected = true
         during_after_message.innerHTML = during_message;
         after_uuid.classList.add('hidden');
+        validate(event);
     }
-    validate(event);
+    
      }, false);
 
 
@@ -316,10 +318,11 @@ if($iaddress['p_type'] == 'physical'){
         if(order_number !='' && order_number.length == 36){
             valid = true;
             id.value = crc32(order_number);
-            copy_section.classList.add("success");        
+            copy_section.classList.add("success");       
+            
         }
         validate(event);
-        
+        console.log(valid)
         if(!valid){
             
             senddata.innerHTML = '<span style="color:red;">Invalid order number, (copy payload) from the seller response containing your order id (UUID).</span>';
@@ -447,3 +450,5 @@ if($iaddress['p_type'] == 'physical'){
     
     
     </script>
+
+
