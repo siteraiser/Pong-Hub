@@ -280,7 +280,6 @@ if($iaddress['p_type'] == 'physical'){
         during_after_message.innerHTML = after_message;
         after_uuid.classList.remove('hidden');
         validate(event);
-        checkOrderNumber(event)
     }else{
         during_selected = true
         during_after_message.innerHTML = during_message;
@@ -306,7 +305,7 @@ if($iaddress['p_type'] == 'physical'){
     var uuid = document.getElementById('uuid');
     //hidden input for crc32
     var id = document.getElementById('id');
-    uuid.addEventListener('input', checkOrderNumber, false);
+    uuid.addEventListener('input', validate, false);
     
     
     
@@ -321,11 +320,14 @@ if($iaddress['p_type'] == 'physical'){
             copy_section.classList.add("success");       
             
         }
-      //  validate(event);
-        //  console.log(valid)
+//        validate(event);
+ //       console.log(valid)
         if(!valid){
-            
+           if( order_number !=''){
             senddata.innerHTML = '<span style="color:red;">Invalid order number, (copy payload) from the seller response containing your order id (UUID).</span>';
+           }else {
+                senddata.innerHTML = '<span style="color:orange;">Enter your order id to generate the address submission message, (copy payload) from the seller response containing your order id (UUID).</span>';
+           }
             copy_section.classList.remove("success");
             copy_data_button.disabled = true;
         }
@@ -335,6 +337,7 @@ if($iaddress['p_type'] == 'physical'){
     
     /* Address Handling */
     var address_div = document.getElementById('address');
+ 
     
     var inputs = document.querySelectorAll('#address input');
     var senddata = document.getElementById('senddata');
@@ -373,6 +376,8 @@ if($iaddress['p_type'] == 'physical'){
         return false;
     }
     function validate(event){
+        
+        
         let index = warnings.indexOf(event.target.id);	
         if(valid(event.target) ){			
             if (index !== -1) {
@@ -444,6 +449,9 @@ if($iaddress['p_type'] == 'physical'){
             address_success_message.classList.add("hidden"); 
             copy_section.classList.remove("success");
 
+        }
+        if(!during_selected){
+        checkOrderNumber(event)
         }
     }
     
